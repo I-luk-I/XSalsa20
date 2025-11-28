@@ -1,4 +1,4 @@
-use rand::{random, RngCore};
+use rand::{RngCore};
 
 fn main() {
     /*
@@ -127,7 +127,8 @@ fn xorr(num1:u32,num2:u32)->u32{
     num1 ^ num2
 }
 fn rotat(num:u32,posit:u32)->u32{
-    num.rotate_left(posit)
+
+    num << posit | num >> (32 - posit)
 }
 
 fn littleendian(a:u8,b:u8,c:u8,d:u8)->u32{
@@ -176,14 +177,6 @@ fn generateKey()->[u8;32]{
 }
 fn encrypt(key:&[u8],nonce:&[u8],data:&str)->Vec<u8>{
     let data = data.as_bytes();
-/*
-    let key = generateKey();
-    println!("Key: {:?}",hex::encode(key));
-
-    let nonce = generate_nonce();
-    println!("Nonce: {:?}",hex::encode(nonce));
-
- */
 
     let keystream = flow(key,nonce);
 
