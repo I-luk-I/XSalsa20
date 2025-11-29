@@ -9,7 +9,6 @@ Rust implementation of the XSalsa20 symmetric encryption algorithm.
 ## Usage
 
 ```rust
-use xsalsa20_rust::{encrypt, decrypt, generate_key, generate_nonce};
 
     let key = generateKey();
     println!("Key: {:?}",hex::encode(key));
