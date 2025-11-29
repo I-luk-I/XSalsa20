@@ -8,11 +8,13 @@ fn main() {
     let nonce = generate_nonce();
     println!("Nonce: {:?}",hex::encode(nonce));
 
-    let encrypt = encrypt(&key,&nonce,"Hello world");
+    let message = "Hello world";
+
+    let encrypt = encrypt(&key,&nonce,message);
     println!("Encrypt data: {:?}",hex::encode(&*encrypt));
 
-    let decrypt = decrypt(key.as_slice(),nonce.as_slice(),encrypt);
-    println!("Decrypt data: {:?}",String::from_utf8(decrypt).unwrap());
+    let decrypted = decrypt(key.as_slice(),nonce.as_slice(),encrypt);
+    println!("Decrypt data: {:?}",String::from_utf8(decrypted).unwrap());
 */
 
 }
