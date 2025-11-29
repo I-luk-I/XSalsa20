@@ -10,17 +10,17 @@ fn main() {
 
     let message = "Hello world";
 
-    let encrypt = encrypt(&key,&nonce,message);
+    let encrypt = encrypt(key,nonce,message);
     println!("Encrypt data: {:?}",hex::encode(&*encrypt));
 
-    let decrypted = decrypt(key.as_slice(),nonce.as_slice(),encrypt);
+    let decrypted = decrypt(key,nonce,encrypt);
     println!("Decrypt data: {:?}",String::from_utf8(decrypted).unwrap());
 */
 
 }
-fn flow(key:&[u8],nonce:&[u8])->[u8;64]{
+fn flow(key:[u8;32],nonce:[u8;24])->[u8;64]{
 
-    let mut count:u64 = 0;
+    let count:u64 = 0;
 
     let mut state = [0u32;16];
 
@@ -31,8 +31,6 @@ fn flow(key:&[u8],nonce:&[u8])->[u8;64]{
     let mut countstate = 0;
 
     (1..=4).for_each(|i|{
-
-        let mut count = 0;
 
         state[i] = littleendian(key[countstate],key[countstate+1],key[countstate+2],key[countstate+3]);
         countstate+=4;
@@ -180,7 +178,7 @@ fn generateKey()->[u8;32]{
     key
 
 }
-fn encrypt(key:&[u8],nonce:&[u8],data:&str)->Vec<u8>{
+fn encrypt(key:[u8;32],nonce:[u8;24],data:&str)->Vec<u8>{
     let data = data.as_bytes();
 
     let keystream = flow(key,nonce);
@@ -193,7 +191,7 @@ fn encrypt(key:&[u8],nonce:&[u8],data:&str)->Vec<u8>{
     encrypt
 }
 
-fn decrypt(key:&[u8],nonce:&[u8],data:Vec<u8>)->Vec<u8>{
+fn decrypt(key:[u8;32],nonce:[u8;24],data:Vec<u8>)->Vec<u8>{
     let data = data;
 
     let stream = flow(key,nonce);
