@@ -1,16 +1,19 @@
 use rand::{RngCore};
 
 fn main() {
-    /*
+/*
     let key = generateKey();
     println!("Key: {:?}",hex::encode(key));
 
     let nonce = generate_nonce();
     println!("Nonce: {:?}",hex::encode(nonce));
 
-    let encrypt = encrypt(&key,&nonce,"Hello world)))");
+    let encrypt = encrypt(&key,&nonce,"Hello world");
     println!("Encrypt data: {:?}",hex::encode(&*encrypt));
-    */
+
+    let decrypt = decrypt(key.as_slice(),nonce.as_slice(),encrypt);
+    println!("Decrypt data: {:?}",String::from_utf8(decrypt).unwrap());
+*/
 
 }
 fn flow(key:&[u8],nonce:&[u8])->[u8;64]{
@@ -188,7 +191,7 @@ fn encrypt(key:&[u8],nonce:&[u8],data:&str)->Vec<u8>{
     encrypt
 }
 
-fn decrypt(key:&[u8],nonce:&[u8],data:Vec<u8>)->String{
+fn decrypt(key:&[u8],nonce:&[u8],data:Vec<u8>)->Vec<u8>{
     let data = data;
 
     let stream = flow(key,nonce);
@@ -198,5 +201,5 @@ fn decrypt(key:&[u8],nonce:&[u8],data:Vec<u8>)->String{
     (0..data.len()).for_each(|i|{
         decrypt.push(data[i] ^ stream[i])
     });
-    String::from_utf8(decrypt).unwrap()
+    decrypt
 }
