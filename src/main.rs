@@ -10,15 +10,15 @@ fn main() {
 
     let message = "Hello world";
 
-    let encrypt = encrypt(key,nonce,message);
+    let encrypt = encrypt(&key,nonce,message);
     println!("Encrypt data: {:?}",hex::encode(&*encrypt));
 
-    let decrypted = decrypt(key,nonce,encrypt);
+    let decrypted = decrypt(&key,nonce,encrypt);
     println!("Decrypt data: {:?}",String::from_utf8(decrypted).unwrap());
 */
 
 }
-fn flow(key:[u8;32],nonce:[u8;24])->[u8;64]{
+fn flow(key:&[u8],nonce:[u8;24])->[u8;64]{
 
     let count:u64 = 0;
 
@@ -178,7 +178,11 @@ fn generateKey()->[u8;32]{
     key
 
 }
-fn encrypt(key:[u8;32],nonce:[u8;24],data:&str)->Vec<u8>{
+fn encrypt(key:&[u8],nonce:[u8;24],data:&str)->Vec<u8>{
+    if key.len() != 32{
+        println!("The key length must be 32 bytes.");
+        std::process::exit(1)
+    }
     let data = data.as_bytes();
 
     let keystream = flow(key,nonce);
@@ -191,7 +195,11 @@ fn encrypt(key:[u8;32],nonce:[u8;24],data:&str)->Vec<u8>{
     encrypt
 }
 
-fn decrypt(key:[u8;32],nonce:[u8;24],data:Vec<u8>)->Vec<u8>{
+fn decrypt(key:&[u8],nonce:[u8;24],data:Vec<u8>)->Vec<u8>{
+    if key.len() != 32{
+        println!("The key length must be 32 bytes.");
+        std::process::exit(1)
+    }
     let data = data;
 
     let stream = flow(key,nonce);
