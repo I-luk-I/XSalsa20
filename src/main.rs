@@ -200,7 +200,6 @@ fn decrypt(key:&[u8],nonce:[u8;24],data:Vec<u8>)->Vec<u8>{
         println!("The key length must be 32 bytes.");
         std::process::exit(1)
     }
-    let data = data;
 
     let stream = flow(key,nonce);
 
