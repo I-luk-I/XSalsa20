@@ -18,10 +18,10 @@ Rust implementation of the XSalsa20 symmetric encryption algorithm.
 
     let message = "Hello world";
 
-    let encrypt = encrypt(&key,&nonce,message);
+    let encrypt = encrypt(&key,nonce,message);
     println!("Encrypt data: {:?}",hex::encode(&*encrypt));
 
-    let decrypted = decrypt(key.as_slice(),nonce.as_slice(),encrypt);
+    let decrypted = decrypt(&key,nonce,encrypt);
     println!("Decrypt data: {:?}",String::from_utf8(decrypted).unwrap());
 
 ```
